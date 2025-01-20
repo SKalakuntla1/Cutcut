@@ -1,9 +1,27 @@
-import { Sidebar } from "@/components/sidebar"
-import { Header } from "@/components/header"
-import { CreateCard } from "@/components/create-card"
-import Image from "next/image"
+'use client';
 
-export default function DashboardPage() {
+import { useAuth } from '@/lib/auth-context';
+import Hero from './components/home/Hero';
+import Features from './components/home/Features';
+import { Sidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
+import { CreateCard } from "@/components/create-card";
+import Image from "next/image";
+
+export default function Home() {
+  const { user } = useAuth();
+
+  // Show landing page for non-authenticated users
+  if (!user) {
+    return (
+      <main className="min-h-screen">
+        <Hero />
+        <Features />
+      </main>
+    );
+  }
+
+  // Show video editing interface for authenticated users
   return (
     <div className="flex h-screen bg-gray-50">
       <Sidebar />
@@ -66,6 +84,6 @@ export default function DashboardPage() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
